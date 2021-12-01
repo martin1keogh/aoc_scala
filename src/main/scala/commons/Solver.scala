@@ -11,14 +11,14 @@ import scala.util.Try
 trait Solver[I, O]:
   def puzzle: Puzzle[I, O]
 
-  protected def part1(i: I): Option[O]
-  protected def part2(i: I): Option[O] = None
+  def part1(i: I): Option[O]
+  def part2(i: I): Option[O] = None
 
-  protected def parser(lines: List[String]): ValidatedNec[String, I]
+  def parser(lines: List[String]): ValidatedNec[String, I]
 
-  private def parsedInput: ValidatedNec[String, I] = parser(dataFetcher.getInput)
+  def parsedInput: ValidatedNec[String, I] = parser(dataFetcher.getInput)
 
-  private def dataFetcher: DataFetcher = DataFetcher(puzzle)
+  def dataFetcher: DataFetcher = DataFetcher(puzzle)
 
   def main(args: Array[String]): Unit =
     parsedInput match
