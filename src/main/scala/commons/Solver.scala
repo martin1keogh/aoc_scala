@@ -12,6 +12,7 @@ trait Solver[I, O]:
   def puzzle: Puzzle[I, O]
 
   protected def part1(i: I): Option[O]
+  protected def part2(i: I): Option[O] = None
 
   protected def parser(lines: List[String]): ValidatedNec[String, I]
 
@@ -26,6 +27,7 @@ trait Solver[I, O]:
         e.toList.foreach(println)
       case Valid(i) =>
         println(s"Solution part 1: ${part1(i)}")
+        println(s"Solution part 2: ${part2(i)}")
 
 
 trait LineBasedInput[I]:
