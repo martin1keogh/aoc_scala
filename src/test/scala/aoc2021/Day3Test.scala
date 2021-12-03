@@ -19,7 +19,7 @@ class Day3Test extends AnyWordSpec with PuzzleSolverBehaviour:
         |11001
         |00010
         |01010""".stripMargin,
-      Some(198), None
+      Some(198), Some(230)
     ),
   )
 
