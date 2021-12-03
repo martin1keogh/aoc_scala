@@ -21,16 +21,19 @@ object Day3 extends LineBasedInput[List[Int]], Solver[Matrix, Int] :
     }
 
   def part1(input: Matrix): Option[Int] =
-    val gammaBitList :: epsilonBitList :: Nil =
-      input
-        .transpose
-        .map(sortByFrequency)
-        .transpose
+    input
+      .transpose
+      .map(sortByFrequency)
+      .transpose match {
+        case gammaBitList :: epsilonBitList :: Nil =>
+          Some(bitsToInt(gammaBitList) * bitsToInt(epsilonBitList))
+        case _ =>
+          None
+      }
 
-    Some(bitsToInt(gammaBitList) * bitsToInt(epsilonBitList))
 
   override def part2(input: Matrix): Option[Int] =
-    Some(ratingCalculator(input, 0) * ratingCalculator(input, 1))
+    (ratingCalculator(input, 0), ratingCalculator(input, 1)).mapN(_ * _)
 
   private def bitsToInt(bits: List[Int]): Int =
     Integer.parseInt(bits.mkString, 2)
@@ -38,13 +41,13 @@ object Day3 extends LineBasedInput[List[Int]], Solver[Matrix, Int] :
   private def sortByFrequency(bits: List[Int]): List[Int] =
     bits.groupMapReduce(identity)(_ => 1)(_ + _)
       .toList
-      .sortBy(_.swap)  // not reflected by the name, but this will sort by frequency & put 1s last in case of a tie (useful in part2)
+      .sortBy(_.swap) // not reflected by the name, but this will sort by frequency & put 1s last in case of a tie (useful in part2)
       .map(_._1)
 
   @tailrec
-  private def ratingCalculator(input: Matrix, leastOrMost: 0 | 1, rank: Int = 0): Int = input match {
-    case Nil => ???
-    case hd :: Nil => bitsToInt(hd)
+  private def ratingCalculator(input: Matrix, leastOrMost: 0 | 1, rank: Int = 0): Option[Int] = input match {
+    case Nil => None
+    case hd :: Nil => Some(bitsToInt(hd))
     case _ =>
       val target = sortByFrequency(input.map(_ (rank)))(leastOrMost)
       val toConsider = input.filter(_ (rank) == target)
