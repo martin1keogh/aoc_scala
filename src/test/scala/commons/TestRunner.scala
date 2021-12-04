@@ -28,7 +28,7 @@ trait PuzzleSolverBehaviour:
         s"for part $part" should {
           testCases.zipWithIndex.collect {
             case (tc, i) if tc.answerFor(part).isDefined =>
-              val lines = tc.input.linesIterator.toList
+              val lines = tc.input
 
               tc.answerFor(part) map { answer =>
                 s"parse example ${i + 1}" in {

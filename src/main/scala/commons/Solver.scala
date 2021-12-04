@@ -14,7 +14,7 @@ trait Solver[I, O]:
   def part1(i: I): Option[O]
   def part2(i: I): Option[O] = None
 
-  def parser(lines: List[String]): ValidatedNec[String, I]
+  def parser(input: String): ValidatedNec[String, I]
 
   def parsedInput: ValidatedNec[String, I] = parser(dataFetcher.getInput)
 
@@ -33,7 +33,7 @@ trait Solver[I, O]:
 trait LineBasedInput[I]:
   def parseLine(line: String): Validated[String, I]
 
-  def parser(lines: List[String]): ValidatedNec[String, List[I]] =
-    lines.zipWithIndex.traverse { case (line, i) =>
+  def parser(input: String): ValidatedNec[String, List[I]] =
+    input.linesIterator.toList.zipWithIndex.traverse { case (line, i) =>
       parseLine(line).leftMap(inv => NonEmptyChain(s"Line ${i + 1}: $inv"))
     }

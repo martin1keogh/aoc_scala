@@ -7,11 +7,11 @@ import scala.jdk.CollectionConverters.*
 import scala.util.Try
 
 case class DataFetcher(puzzle: Puzzle[_, _]):
-  type Input = List[String]
+  type Input = String
 
   def getInput: Input =
     readLocalFile getOrElse {
-      val downloaded = downloadInput.toList
+      val downloaded = downloadInput
       saveInput(downloaded)
       downloaded
     }
@@ -22,9 +22,9 @@ case class DataFetcher(puzzle: Puzzle[_, _]):
   // Should probably make sure to close this.
   // If only I cared.
   private def readLocalFile: Option[Input] =
-    Try(Source.fromFile(localInputFile.toFile).getLines().toList).toOption
+    Try(Source.fromFile(localInputFile.toFile).getLines().mkString).toOption
 
-  private def downloadInput: Iterator[String] =
+  private def downloadInput: String =
     requests
       .get(
         puzzle.inputUrl.toString,
@@ -32,7 +32,8 @@ case class DataFetcher(puzzle: Puzzle[_, _]):
       )
       .text()
       .linesIterator
+      .mkString
 
-  private def saveInput(input: List[String]): Unit =
+  private def saveInput(input: String): Unit =
     Files.createDirectories(localInputFile.getParent)
-    Files.write(localInputFile, input.asJava)
+    Files.write(localInputFile, input.linesIterator.toList.asJava)
