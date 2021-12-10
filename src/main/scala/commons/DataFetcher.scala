@@ -31,9 +31,8 @@ case class DataFetcher(puzzle: Puzzle[_, _]):
         headers = Map("cookie" -> s"session=${sys.env("SESSION")}")
       )
       .text()
-      .linesIterator
-      .mkString
 
   private def saveInput(input: String): Unit =
-    Files.createDirectories(localInputFile.getParent)
-    Files.write(localInputFile, input.linesIterator.toList.asJava)
+    ()
+//    Files.createDirectories(localInputFile.getParent)
+//    Files.write(localInputFile, input.linesIterator.toList.asJava)

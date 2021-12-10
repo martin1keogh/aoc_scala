@@ -9,8 +9,6 @@ import scala.annotation.tailrec
 import scala.collection.SortedMap
 import scala.util.Try
 
-type Matrix = List[List[Int]]
-
 object Day3 extends LineBasedInput[List[Int]], Solver[Matrix, Int] :
   val puzzle = Puzzle(Year(2021), Day(3))
 

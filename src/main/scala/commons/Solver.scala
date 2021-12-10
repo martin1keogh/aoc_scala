@@ -24,7 +24,6 @@ trait Solver[I, O]:
     parsedInput match
       case Invalid(e) =>
         println(s"Nope, try again. Parse errors:")
-        e.toList.foreach(println)
       case Valid(i) =>
         println(s"Solution part 1: ${part1(i)}")
         println(s"Solution part 2: ${part2(i)}")
