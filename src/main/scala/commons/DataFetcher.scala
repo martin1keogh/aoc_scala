@@ -33,6 +33,5 @@ case class DataFetcher(puzzle: Puzzle[_, _]):
       .text()
 
   private def saveInput(input: String): Unit =
-    ()
-//    Files.createDirectories(localInputFile.getParent)
-//    Files.write(localInputFile, input.linesIterator.toList.asJava)
+    Files.createDirectories(localInputFile.getParent)
+    Files.write(localInputFile, input.linesIterator.toList.asJava)
