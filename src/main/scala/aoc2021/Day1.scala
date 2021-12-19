@@ -11,7 +11,7 @@ object Day1 extends LineBasedInput[Int], Solver[List[Int], Int] :
     line.toIntOption.toValid(s"$line is not an int")
 
   def part1(input: List[Int]): Option[Int] =
-    Some(input.sliding(2).count { case List(v1, v2) => v1 < v2 })
+    Some(input.sliding2.count { case (v1, v2) => v1 < v2 })
 
   override def part2(input: List[Int]): Option[Int] =
-    Some(input.sliding(3).sliding(2).map(_.toList).count { case List(v1, v2) => v1.sum < v2.sum })
+    Some(input.sliding3.sliding2.count { case (v1, v2) => v1.fold < v2.fold })
