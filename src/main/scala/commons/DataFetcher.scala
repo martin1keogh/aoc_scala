@@ -22,7 +22,7 @@ case class DataFetcher(puzzle: Puzzle[_, _]):
   // Should probably make sure to close this.
   // If only I cared.
   private def readLocalFile: Option[Input] =
-    Try(Source.fromFile(localInputFile.toFile).getLines().mkString).toOption
+    Try(Source.fromFile(localInputFile.toFile).getLines().mkString("\n")).toOption
 
   private def downloadInput: String =
     requests
