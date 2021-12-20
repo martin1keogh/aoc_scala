@@ -1,3 +1,3 @@
 package commons
 
-type Matrix = List[List[Int]]
+type Matrix[T] = List[List[T]]

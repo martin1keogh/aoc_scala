@@ -9,7 +9,7 @@ import scala.annotation.tailrec
 import scala.collection.SortedMap
 import scala.util.Try
 
-object Day3 extends LineBasedInput[List[Int]], Solver[Matrix, Int] :
+object Day3 extends LineBasedInput[List[Int]], Solver[Matrix[Int], Int] :
   val puzzle = Puzzle(Year(2021), Day(3))
 
   def parseLine(line: String): Validated[String, List[Int]] =
@@ -18,7 +18,7 @@ object Day3 extends LineBasedInput[List[Int]], Solver[Matrix, Int] :
       case nb => Invalid(nb)
     }
 
-  def part1(input: Matrix): Option[Int] =
+  def part1(input: Matrix[Int]): Option[Int] =
     input
       .transpose
       .map(sortByFrequency)
@@ -30,7 +30,7 @@ object Day3 extends LineBasedInput[List[Int]], Solver[Matrix, Int] :
       }
 
 
-  override def part2(input: Matrix): Option[Int] =
+  override def part2(input: Matrix[Int]): Option[Int] =
     (ratingCalculator(input, 0), ratingCalculator(input, 1)).mapN(_ * _)
 
   private def bitsToInt(bits: List[Int]): Int =
@@ -43,7 +43,7 @@ object Day3 extends LineBasedInput[List[Int]], Solver[Matrix, Int] :
       .map(_._1)
 
   @tailrec
-  private def ratingCalculator(input: Matrix, leastOrMost: 0 | 1, rank: Int = 0): Option[Int] = input match {
+  private def ratingCalculator(input: Matrix[Int], leastOrMost: 0 | 1, rank: Int = 0): Option[Int] = input match {
     case Nil => None
     case hd :: Nil => Some(bitsToInt(hd))
     case _ =>

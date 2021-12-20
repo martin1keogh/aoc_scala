@@ -9,11 +9,11 @@ import scala.annotation.tailrec
 import scala.util.Try
 
 
-object Day4 extends Solver[(List[Int], List[Matrix]), Int] :
+object Day4 extends Solver[(List[Int], List[Matrix[Int]]), Int] :
   val puzzle = Puzzle(Year(2021), Day(4))
 
-  def parser(input: String): ValidatedNec[String, (List[Int], List[Matrix])] =
-    input.split("(\\n\\n|\\r\\n\\r\\n)").foldLeft(Option.empty[(List[Int], List[Matrix])]) {
+  def parser(input: String): ValidatedNec[String, (List[Int], List[Matrix[Int]])] =
+    input.split("(\\n\\n|\\r\\n\\r\\n)").foldLeft(Option.empty[(List[Int], List[Matrix[Int]])]) {
       case (None, line) =>
         line.split(',').toList.traverse(_.toIntOption.toValid("not an int")).toOption.map((_, List.empty))
       case (Some(draws, charts), group) =>
@@ -23,7 +23,7 @@ object Day4 extends Solver[(List[Int], List[Matrix]), Int] :
     }.toValid(NonEmptyChain("tough"))
 
 
-  def part1(input: (List[Int], List[Matrix])): Option[Int] =
+  def part1(input: (List[Int], List[Matrix[Int]])): Option[Int] =
     val (draws, grids) = input
     (
       for {
@@ -33,7 +33,7 @@ object Day4 extends Solver[(List[Int], List[Matrix]), Int] :
       } yield nonWinningNumbers.sum * draw.last
     ).headOption
 
-  override def part2(input: (List[Int], List[Matrix])): Option[Int] =
+  override def part2(input: (List[Int], List[Matrix[Int]])): Option[Int] =
     val (draws, grids) = input
     (
       for {
@@ -43,5 +43,5 @@ object Day4 extends Solver[(List[Int], List[Matrix]), Int] :
       } yield nonWinningNumbers.sum * draw.last
     ).lastOption
 
-  private def isWinningGrid(grid: Matrix, draws: List[Int]): Boolean =
+  private def isWinningGrid(grid: Matrix[Int], draws: List[Int]): Boolean =
     (grid ++ grid.transpose).exists(_.forall(draws.contains))
