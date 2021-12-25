@@ -8,8 +8,9 @@ lazy val root = (project in file("."))
     libraryDependencies ++= List(
       "org.typelevel" %% "cats-core" % "2.7.0",
       "com.lihaoyi" %% "requests" % "0.6.9",
+      "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.0"
     ),
     libraryDependencies ++= List(
       "org.scalatest" %% "scalatest" % "3.2.10"
-    ).map(_ % Test)
+    ).map(_ % Test),
   )

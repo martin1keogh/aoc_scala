@@ -10,7 +10,7 @@ class Day21Test extends AnyWordSpec with PuzzleSolverBehaviour :
     TestCase(
       """Player 1 starting position: 4
         |Player 2 starting position: 8""".stripMargin,
-      Some(739785), None
+      Some(739785), Some(444356092776315L)
     ),
   )
 
