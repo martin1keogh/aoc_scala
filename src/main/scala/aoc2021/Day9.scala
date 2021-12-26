@@ -33,12 +33,3 @@ object Day9 extends Solver[Matrix[Int], Int] :
           }
       }.sum
     Some(res)
-
-  def wrapMatrix(matrix: Matrix[Int]): Matrix[Option[Int]] = matrix match {
-    case Nil => List(List(None))
-    case row :: _ =>
-      val inner = matrix.map(_.map(Some.apply))
-      val wrappedRows = inner.map(row => None :: (row :+ None))
-      val topBottom = List.fill(row.length + 2)(None)
-      topBottom :: (wrappedRows :+ topBottom)
-  }
